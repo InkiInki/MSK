@@ -123,8 +123,8 @@ class DS2K(MIL):
             # 获取负包中所有的实例
             ne_ins, _, _ = self.get_sub_ins_space(ne_idx)
             # 计算选取的代表性实例的个数
-            po_N = 10 if self._po_N is None else self._po_N
-            ne_N = 10 if self._ne_N is None else self._ne_N
+            po_N = len(po_idx) if self._po_N is None else self._po_N
+            ne_N = len(po_idx) if self._ne_N is None else self._ne_N
             k_means = MiniBatchKMeans(n_clusters=ne_N)
             # 选取最负代表性实例
             k_means.fit(ne_ins)
