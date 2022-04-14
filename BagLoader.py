@@ -46,11 +46,6 @@ class BagLoader:
             data_space, label_space = self.__load_mnist(False)
             self.data_space.extend(data_space)
             self.label_space.extend(label_space)
-        elif self.data_type == "fashion_mnist":
-            self.data_space, self.label_space = self.__load_fashion_mnist(True)
-            data_space, label_space = self.__load_fashion_mnist(False)
-            self.data_space.extend(data_space)
-            self.label_space.extend(label_space)
         elif self.data_type == "csv" and self.data_path is not None:
             self.data_space, self.label_space = self.__load_csv()
 
@@ -76,23 +71,6 @@ class BagLoader:
         for i, (data, label) in enumerate(data_loader):
             print_progress_bar(i, num_data)
             data, label = data.reshape(-1).numpy().tolist(), int(label.numpy()[0])
-            ret_data.append(data)
-            ret_label.append(label)
-        print()
-        return ret_data, ret_label
-
-    def __load_fashion_mnist(self, train):
-        flag = "train" if train else "test"
-        print("Loading FashionMNIST %s data..." % flag)
-
-        data_loader = bag_loader(train, self.data_path, data_type="fashion_mnist")
-        num_data = len(data_loader)
-
-        ret_data, ret_label = [], []
-        for i, (data, label) in enumerate(data_loader):
-            print_progress_bar(i, num_data)
-            data = data[0][0]
-            data, label = (data.numpy(), int(label.numpy()[0]))
             ret_data.append(data)
             ret_label.append(label)
         print()
